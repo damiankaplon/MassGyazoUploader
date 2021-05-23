@@ -5,7 +5,9 @@
 	<li> Stores data about users in json "typed" file </li>
 	<li> Used libraries are in requiremets.txt file </li>
 </ul>
-## Example of use
-python gyazo_uploader.py -u damian C:\\Users\\Damian\\Pictures
-python gyazo_uploader.py C:\\Users\\Damian\\Pictures
-python gyazo_uploader.py -u damian -p password C:\\Users\\Damian\\Pictures
+<h2> Example of use </h2>
+<ul>
+	<li> python gyazo_uploader.py -u damian C:\\Users\\Damian\\Pictures </li>
+	<li> python gyazo_uploader.py C:\\Users\\Damian\\Pictures </li>
+	<li> python gyazo_uploader.py -u damian -p password C:\\Users\\Damian\\Pictures </li>
+</ul>
