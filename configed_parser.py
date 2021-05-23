@@ -3,6 +3,10 @@ from argparse_prompt import PromptParser
 
 
 class ConfigedParser(PromptParser):
+    """
+    Class which object is going to be created/used just once. I thought its good idea, but seems to be kinda stupid.
+    Doesnt mae sens to create class just for one object
+    """
     def __init__(self):
         super().__init__()
         self.add_argument("-u", help="Login")

@@ -10,14 +10,16 @@ import json
 
 class GyazoUploader:
     def __init__(self, parser: ConfigedParser):
-        self.parser: ConfigedParser = parser
+        self.__parser: ConfigedParser = parser
         self.__access_token: str = ""
         self.__files_to_upload: list = []
-        self.__save_credentials()
+        self.__valid_credentials()
         self.__upload()
 
-    def __save_credentials(self) -> None:
-        username: str = self.parser.get_args().get('u')
+    def __valid_credentials(self) -> None:
+        """Checks if user is save in .gyazo file. If he is, access token is fetched from file. If not, user
+        is asked to type so, and then his login and access token is appended to file"""
+        username: str = self.__parser.get_args().get('u')
         try:
             with open(constant.CONFIG_PATH, 'r+') as config_file:
                 data: dict = json.load(config_file)
@@ -37,7 +39,9 @@ class GyazoUploader:
             print("Couldn't localize '.gyazo' file in home catalog")
 
     def __upload(self) -> None:
-        directory: str = self.parser.get_args().get('dir')
+        """list all paths to files, with extension .png, .jpg, in indicated directory then executes method
+        <code> upload_image </code> for each"""
+        directory: str = self.__parser.get_args().get('dir')
         try:
             dir_content: list = os.listdir(directory)
             for element in dir_content:
@@ -51,10 +55,17 @@ class GyazoUploader:
             self.__upload_image(file_path)
 
     def __upload_image(self, path_to_file: str) -> None:
-        with open(path_to_file, 'rb') as f:
-            r = requests.request('post', constant.UPLOAD_URL, files={'imagedata': f}, headers={
-                'Authorization': 'Bearer ' + self.__access_token})
-            print(r)
+        """ Parameters
+        ----------
+        path_to_file : str, required
+            Path to file to upload"""
+        try:
+            with open(path_to_file, 'rb') as f:
+                r = requests.request('post', constant.UPLOAD_URL, files={'imagedata': f}, headers={
+                    'Authorization': 'Bearer ' + self.__access_token})
+                print(r)
+        except FileNotFoundError:
+            print("File not found error! Handed wrong path to file. File doesn't exist, or path doesn't exist")
 
 
 gyazo_uploader = GyazoUploader(ConfigedParser())
