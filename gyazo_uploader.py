@@ -39,10 +39,10 @@ class GyazoUploader:
     def __upload(self) -> None:
         directory: str = self.parser.get_args().get('dir')
         try:
-            dir_content = os.listdir(directory)
+            dir_content: list = os.listdir(directory)
             for element in dir_content:
                 if element.endswith(".jpg") or element.endswith(".png"):
-                    self.__files_to_upload.append(element)
+                    self.__files_to_upload.append(directory + "\\" + element)
             print(self.__files_to_upload)
         except FileNotFoundError:
             print("System can't find this directory!")
