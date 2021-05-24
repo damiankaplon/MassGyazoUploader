@@ -36,7 +36,9 @@ class GyazoUploader:
                 config_file.seek(0)
                 json.dump(data, config_file)
         except FileNotFoundError:
-            print("Couldn't localize '.gyazo' file in home catalog")
+            with open(constant.CONFIG_PATH, 'w+') as config_file:
+                config_file.write("{}")
+            self.__valid_credentials()
 
     def __upload(self) -> None:
         """list all paths to files, with extension .png, .jpg, in indicated directory then executes method
