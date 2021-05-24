@@ -30,8 +30,8 @@ class GyazoUploader:
                                 self.__access_token = nd_value
                                 return
 
-                access_token: str = input("It is your first time here. Type in your access token: ")
-                json_to_append: dict = {username: {"access_token": access_token}}
+                self.__access_token: str = input("It is your first time here. Type in your access token: ")
+                json_to_append: dict = {username: {"access_token": self.__access_token}}
                 data.update(json_to_append)
                 config_file.seek(0)
                 json.dump(data, config_file)
