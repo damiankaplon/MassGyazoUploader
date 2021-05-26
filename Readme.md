@@ -7,7 +7,7 @@
 </ul>
 <h2> Example of use </h2>
 <ul>
-	<li> python gyazo_uploader.py -u damian C:\\Users\\Damian\\Pictures </li>
-	<li> python gyazo_uploader.py C:\\Users\\Damian\\Pictures </li>
-	<li> python gyazo_uploader.py -u damian -p password C:\\Users\\Damian\\Pictures </li>
+	<li> python main.py -u damian C:\\Users\\Damian\\Pictures </li>
+	<li> python main.py C:\\Users\\Damian\\Pictures </li>
+	<li> python main.py -u damian -p password C:\\Users\\Damian\\Pictures </li>
 </ul>
