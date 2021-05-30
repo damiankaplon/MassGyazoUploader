@@ -21,15 +21,14 @@ class GyazoUploader:
         self.__parser: ConfigedParser = parser
         self.__access_token: str = ""
         self.__files_to_upload: list = []
+        self.__set_required_args()
 
-    def run(self) -> None:
-        username: str = self.__parser.get_args().get('u')
+    def run(self, username: str, directory: str) -> None:
         self.__valid_credentials(username)
-        directory: str = self.__parser.get_args().get('dir')
         self.__upload(directory)
 
     def __valid_credentials(self, username: str) -> None:
-        """Checks if user is save in .gyazo file. If he is, access token is fetched from file. If not, user
+        """Checks if user is save in .gyazo file. If he is, his access token is fetched from file. If not, user
         is asked to type so, and then his login and access token is appended to file"""
         try:
             with open(CONFIG_PATH, 'r+') as config_file:
@@ -60,8 +59,8 @@ class GyazoUploader:
                 if element.endswith(".jpg") or element.endswith(".png"):
                     self.__files_to_upload.append(directory + "\\" + element)
             print(self.__files_to_upload)
-        except FileNotFoundError as e:
-            raise UploaderException("Incorrect dir: {}".format(str(e)))
+        except FileNotFoundError:
+            print("Indicated directory can't be find!")
 
         for file_path in self.__files_to_upload:
             self.__upload_image(file_path)
@@ -79,5 +78,16 @@ class GyazoUploader:
                     print("Image {} uploaded".format(path_to_file))
                 else:
                     raise UploaderException
-        except FileNotFoundError as e:
-            raise UploaderException("Incorrect file path: {}".format(str(e)))
+        except FileNotFoundError:
+            print("Indicated, file {}, from directory can't be find".format(path_to_file))
+
+    def __set_required_args(self) -> None:
+        if self.__parser.check_for_dir_arg():
+            self.directory: str = self.__parser.get_args().get('dir')
+        else:
+            self.directory: str = input("Path to directory: ")
+
+        if self.__parser.check_for_user_arg():
+            self.username: str = self.__parser.get_args().get('u')
+        else:
+            self.username: str = input("Username: ")
