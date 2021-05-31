@@ -25,15 +25,15 @@ class ConfigedParser(ArgumentParser):
         self.add_argument("-u", help="Login. Required argument", default="None")
         self.add_argument("-p", help="Password", default="None")
         self.add_argument("-dir", help="path to directory. Required Argument", default="None")
-        self.__args: dict = vars(self.parse_args())
-        #self.pass_arg()
+        self.args: dict = vars(self.parse_args())
+        self.pass_arg()
 
     def get_args(self) -> dict:
-        return self.__args
+        return self.args
 
     def check_for_user_arg(self) -> bool:
         """Checks if username is typed in and if it atleast seems to be a valid name"""
-        arg_u: str = self.__args.get('u')
+        arg_u: str = self.args.get('u')
         if arg_u == 'None':
             return False
         else:
@@ -41,14 +41,14 @@ class ConfigedParser(ArgumentParser):
 
     def check_for_dir_arg(self) -> bool:
         """Checks if dir is typed in and if it atleast seems to be a valid name"""
-        arg_d: str = self.__args.get('dir')
+        arg_d: str = self.args.get('dir')
         if arg_d == 'None':
             return False
         elif arg_d.isascii():
             return True
 
     def pass_arg(self):
-        arg_p: str = self.__args.get('p')
+        arg_p: str = self.args.get('p')
         if arg_p == "None":
             arg_p = getpass()
         else:

@@ -21,13 +21,15 @@ class GyazoUploader:
         self.__parser: ConfigedParser = parser
         self.__access_token: str = ""
         self.__files_to_upload: list = []
-        self.__set_required_args()
+        self.directory: str = ""
+        self.username: str = ""
+        self.set_required_args()
 
     def run(self, username: str, directory: str) -> None:
-        self.__valid_credentials(username)
-        self.__upload(directory)
+        self.valid_credentials(username)
+        self.upload(directory)
 
-    def __valid_credentials(self, username: str) -> None:
+    def valid_credentials(self, username: str) -> None:
         """Checks if user is save in .gyazo file. If he is, his access token is fetched from file. If not, user
         is asked to type so, and then his login and access token is appended to file"""
         try:
@@ -48,9 +50,9 @@ class GyazoUploader:
         except FileNotFoundError:
             with open(CONFIG_PATH, 'w+') as config_file:
                 config_file.write("{}")
-            self.__valid_credentials(username)
+            self.valid_credentials(username)
 
-    def __upload(self, directory: str) -> None:
+    def upload(self, directory: str) -> None:
         """list all paths to files, with extension .png, .jpg, in indicated directory then executes method
         <code> upload_image </code> for each"""
         try:
@@ -63,9 +65,9 @@ class GyazoUploader:
             print("Indicated directory can't be find!")
 
         for file_path in self.__files_to_upload:
-            self.__upload_image(file_path)
+            self.upload_image(file_path)
 
-    def __upload_image(self, path_to_file: str) -> None:
+    def upload_image(self, path_to_file: str) -> None:
         """ Parameters
         ----------
         path_to_file : str, required
@@ -81,7 +83,7 @@ class GyazoUploader:
         except FileNotFoundError:
             print("Indicated, file {}, from directory can't be find".format(path_to_file))
 
-    def __set_required_args(self) -> None:
+    def set_required_args(self) -> None:
         if self.__parser.check_for_dir_arg():
             self.directory: str = self.__parser.get_args().get('dir')
         else:

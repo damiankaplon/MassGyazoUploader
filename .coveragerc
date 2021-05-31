@@ -1,0 +1,7 @@
+[run]
+omit =
+    venv/*
+    tests/*
+    main.py
+    uploader/constant.py
+    uploader/__init__.py
