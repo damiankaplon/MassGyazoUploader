@@ -7,9 +7,8 @@ __email__ = 'kaplon.damian99@gmail.com'
 __copyright___ = "Copyright (c) 2021 Damian Kaplon"
 
 import argparse
-import warnings
 from argparse import ArgumentParser
-from getpass import getpass
+#from getpass import getpass
 
 
 class ParserException(BaseException):
@@ -48,8 +47,10 @@ class ConfigedParser(ArgumentParser):
             return True
 
     def pass_arg(self):
+        """This method at this moment doesn't have sens because password doesn't have any commitment in program"""
         arg_p: str = self.args.get('p')
         if arg_p == "None":
-            arg_p = getpass()
+             pass
+        #     arg_p = getpass()
         else:
-            print("Your password was typed in as argument in CLI. Everyone could see that!")
+             print("Your password was typed in as argument in CLI. Everyone could see that!")
